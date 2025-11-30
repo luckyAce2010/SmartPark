@@ -18,4 +18,24 @@ public class ParkingLotData {
         parkingLotList.add(parkingLot);
     }
 
+    public boolean parkingLotIdExists(String lotId){
+
+        for(ParkingLot parkingLot : getParkingLotList()) {
+            if(parkingLot.getLotId().equals(lotId)){return true;}
+        }
+
+        return false;
+
+    }
+
+    public ParkingLot getParkingLot(String lotId) {
+
+        for(ParkingLot parkingLot : getParkingLotList()) {
+            if(parkingLot.getLotId().equals(lotId)){
+                return parkingLot;
+            }
+        }
+
+        return null;
+    }
 }

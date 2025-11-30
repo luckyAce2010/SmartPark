@@ -26,7 +26,7 @@ public class VehicleServiceImpl implements VehicleService {
         String idReq = StringUtils.removeUnnecessaryWhiteSpaces(registerVehicleReq.getLicensePlate());
 
         //Check ID
-        if(!checkValidLicensePlate(idReq)){
+        if(vehicleData.licensePlateExists(idReq)){
             return ResponseUtil.error(VEHICLE_LICENSE_PLATE_USED(idReq), BAD_REQUEST_CODE);
         }
 
@@ -34,24 +34,12 @@ public class VehicleServiceImpl implements VehicleService {
                 .licensePlate(idReq)
                 .ownerName(registerVehicleReq.getOwnerName())
                 .vehicleType(registerVehicleReq.getVehicleType())
+                .checkedIn(false)
                 .build();
 
         vehicleData.registerVehicle(vehicle);
 
         return ResponseUtil.success(VEHICLE_REGISTER_SUCCESS, SUCCESS_CODE);
     }
-
-    //Helper Methods
-    //If false it means that ID is already taken
-    private boolean checkValidLicensePlate(String requestId){
-
-        for(Vehicle vehicle : vehicleData.getVehicleList()) {
-            if(vehicle.getLicensePlate().equals(requestId)){return false;}
-        }
-
-        return true;
-
-    }
-
 
 }
