@@ -33,4 +33,14 @@ public class ResponseUtil {
                 .data(null)
                 .build();
     }
+
+    // Error with Data
+    public static <T> Response<T> error(T data, String message, int statusCode) {
+        return Response.<T>builder()
+                .success(false)
+                .statusCode(statusCode)
+                .message(message)
+                .data(data)
+                .build();
+    }
 }

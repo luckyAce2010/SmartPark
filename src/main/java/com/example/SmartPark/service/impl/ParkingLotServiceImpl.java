@@ -3,6 +3,7 @@ package com.example.SmartPark.service.impl;
 import com.example.SmartPark.data.ParkingLotData;
 import com.example.SmartPark.data.VehicleData;
 import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
+import com.example.SmartPark.dto.response.ParkingLotAvailabilityResponse;
 import com.example.SmartPark.dto.response.Response;
 import com.example.SmartPark.pojo.ParkingLot;
 import com.example.SmartPark.pojo.Vehicle;
@@ -111,6 +112,28 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         parkingLot.getVehicles().remove(vehicle);
 
         return ResponseUtil.success(VEHICLE_CHECK_OUT_SUCCESS, SUCCESS_CODE);
+    }
+
+    @Override
+    public Response<ParkingLotAvailabilityResponse> checkParkingLotAvailability(String lotId) {
+
+        //Trim whitespaces and unnecessary whitespaces
+        lotId = StringUtils.removeUnnecessaryWhiteSpaces(lotId);
+
+        //Validate Parking lot ID if exists
+        ParkingLot parkingLot = parkingLotData.getParkingLot(lotId);
+        if(parkingLot == null){
+            return ResponseUtil.error(null, PARKING_ID_NOT_EXISTS(lotId), BAD_REQUEST_CODE);
+        }
+
+        ParkingLotAvailabilityResponse parkingAvailabilityResp =
+                ParkingLotAvailabilityResponse.builder()
+                        .lotId(lotId)
+                        .available(parkingLot.getCapacity() - parkingLot.getOccupiedSpaces())
+                        .occupied(parkingLot.getOccupiedSpaces())
+                        .build();
+
+        return ResponseUtil.success(parkingAvailabilityResp, GET_PARKING_AVAILABITY_SUCCESS, SUCCESS_CODE);
     }
 
 

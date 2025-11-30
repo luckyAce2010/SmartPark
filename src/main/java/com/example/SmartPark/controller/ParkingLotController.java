@@ -2,7 +2,9 @@ package com.example.SmartPark.controller;
 
 import com.example.SmartPark.dto.request.CheckInRequest;
 import com.example.SmartPark.dto.request.CheckOutRequest;
+import com.example.SmartPark.dto.request.CheckParkingLotRequest;
 import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
+import com.example.SmartPark.dto.response.ParkingLotAvailabilityResponse;
 import com.example.SmartPark.dto.response.Response;
 import com.example.SmartPark.service.interfaces.ParkingLotService;
 import jakarta.validation.Valid;
@@ -34,6 +36,12 @@ public class ParkingLotController {
     @PostMapping("/check-out")
     public Response<Void> checkOutVehicle(@RequestBody @Valid CheckOutRequest checkOutRequest) {
         return parkingLotService.checkOut(checkOutRequest.getLicensePlate());
+    }
+
+    //Get availability and occupancy
+    @GetMapping("availability")
+    public Response<ParkingLotAvailabilityResponse> getAvailability(@RequestBody @Valid CheckParkingLotRequest checkParkingLotRequest) {
+        return parkingLotService.checkParkingLotAvailability(checkParkingLotRequest.getLotId());
     }
 
 
