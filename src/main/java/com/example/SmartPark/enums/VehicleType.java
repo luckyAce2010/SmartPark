@@ -1,20 +1,11 @@
 package com.example.SmartPark.enums;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import static com.example.SmartPark.constants.VehicleConstant.*;
 
 public enum VehicleType {
-    CAR("Car"),
-    MOTORCYCLE("Motorcycle"),
-    TRUCK("Truck");
+    CAR(TYPE_CAR),
+    MOTORCYCLE(TYPE_MOTORCYCLE),
+    TRUCK(TYPE_TRUCK);
 
-    private final String value;
-
-    VehicleType(String value) {
-        this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
+    VehicleType(String value) {}
 }
