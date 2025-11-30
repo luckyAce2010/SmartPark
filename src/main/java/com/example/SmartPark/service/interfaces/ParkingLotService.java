@@ -6,4 +6,6 @@ import com.example.SmartPark.dto.response.Response;
 public interface ParkingLotService {
 
     Response<Void> registerParkingLot(RegisterParkingLotRequest createParkingLotReq);
+
+    Response<Void> checkIn(String lotId, String licensePlate);
 }

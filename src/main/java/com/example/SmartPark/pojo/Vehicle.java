@@ -19,5 +19,5 @@ public class Vehicle {
     String licensePlate;
     VehicleType vehicleType;
     String ownerName;
-
+    Boolean checkedIn;
 }

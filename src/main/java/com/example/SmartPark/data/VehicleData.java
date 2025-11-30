@@ -16,4 +16,24 @@ public class VehicleData {
     public void registerVehicle(Vehicle vehicle){
         vehicleList.add(vehicle);
     }
+
+    public boolean licensePlateExists(String requestId){
+
+        for(Vehicle vehicle : getVehicleList()) {
+            if(vehicle.getLicensePlate().equals(requestId)){return true;}
+        }
+
+        return false;
+
+    }
+
+    public Vehicle getVehicle(String licensePlate) {
+        for(Vehicle vehicle : getVehicleList()) {
+            if(vehicle.getLicensePlate().equals(licensePlate)){
+                return vehicle;
+            }
+        }
+
+        return null;
+    }
 }
