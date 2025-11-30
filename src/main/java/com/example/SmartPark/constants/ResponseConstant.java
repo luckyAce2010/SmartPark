@@ -12,6 +12,11 @@ public class ResponseConstant {
     public static String TYPE_MISMATCH(String field, String type){
         return "Field '" + field + "' should be of type " + type;
     }
+    public static final String INVALID_PARAMETER = "Invalid parameter type";
+    public static final String INVALID_ENUM(String field, String allowedValues){
+        return "Invalid value for field '" + field +
+                "'. Allowed values are: " + allowedValues;
+    }
 
 
 }

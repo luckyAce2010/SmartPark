@@ -1,6 +1,6 @@
 package com.example.SmartPark.controller;
 
-import com.example.SmartPark.dto.request.CreateParkingLotRequest;
+import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
 import com.example.SmartPark.dto.response.Response;
 import com.example.SmartPark.service.interfaces.ParkingLotService;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class ParkingLotController {
 
     //Register parking lot
     @PostMapping
-    public Response<Void> registerParkingLot(@Valid @RequestBody CreateParkingLotRequest createParkingLotReq){
+    public Response<Void> registerParkingLot(@Valid @RequestBody RegisterParkingLotRequest createParkingLotReq){
         return parkingLotService.registerParkingLot(createParkingLotReq);
     }
 

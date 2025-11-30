@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
-public class CreateParkingLotRequest {
+public class RegisterParkingLotRequest {
 
     @NotBlank(message = "Parking Lot ID is required")
     @Size(max = 50, message = "Parking lot name must not exceed 50 characters")
