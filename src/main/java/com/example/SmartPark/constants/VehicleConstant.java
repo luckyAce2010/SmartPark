@@ -9,9 +9,11 @@ public class VehicleConstant {
 
     public static final String VEHICLE_REGISTER_SUCCESS = "Successfully Registered Vehicle";
     public static final String VEHICLE_ALREADY_CHECKED_IN = "Vehicle is already checked in";
+    public static final String VEHICLE_NOT_CHECKED_IN = "Vehicle is not yet checked in";
     public static final String VEHICLE_PARKED_SUCCESS = "Successfully Checked in Vehicle";
+    public static final String VEHICLE_CHECK_OUT_SUCCESS = "Successfully Checked out Vehicle";
     public static String VEHICLE_LICENSE_PLATE_USED(String id) {
-        return "License Plate: '" + id + "' is already in use";
+        return "License Plate: '" + id + "' already exists";
     }
     public static String VEHICLE_LICENSE_PLATE_NOT_EXISTS(String id) {
         return "License Plate: '" + id + "' doesn't exists";
