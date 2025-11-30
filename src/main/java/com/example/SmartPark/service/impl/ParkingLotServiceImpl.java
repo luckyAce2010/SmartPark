@@ -5,6 +5,7 @@ import com.example.SmartPark.data.VehicleData;
 import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
 import com.example.SmartPark.dto.response.ParkingLotAvailabilityResponse;
 import com.example.SmartPark.dto.response.Response;
+import com.example.SmartPark.dto.response.VehicleResponse;
 import com.example.SmartPark.pojo.ParkingLot;
 import com.example.SmartPark.pojo.Vehicle;
 import com.example.SmartPark.service.interfaces.ParkingLotService;
@@ -13,6 +14,7 @@ import com.example.SmartPark.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.SmartPark.constants.ParkingLotConstant.*;
 import static com.example.SmartPark.constants.ResponseConstant.BAD_REQUEST_CODE;
@@ -134,6 +136,33 @@ public class ParkingLotServiceImpl implements ParkingLotService {
                         .build();
 
         return ResponseUtil.success(parkingAvailabilityResp, GET_PARKING_AVAILABITY_SUCCESS, SUCCESS_CODE);
+    }
+
+    @Override
+    public Response<List<VehicleResponse>> getVehicles(String lotId) {
+
+        //Trim whitespaces and unnecessary whitespaces
+        lotId = StringUtils.removeUnnecessaryWhiteSpaces(lotId);
+
+        //Validate Parking lot ID if exists
+        ParkingLot parkingLot = parkingLotData.getParkingLot(lotId);
+        if(parkingLot == null){
+            return ResponseUtil.error(null, PARKING_ID_NOT_EXISTS(lotId), BAD_REQUEST_CODE);
+        }
+
+        //Build the response
+        List<VehicleResponse> vehicleResponseList = new ArrayList<>();
+        for(Vehicle vehicle : parkingLot.getVehicles()){
+            VehicleResponse vehicleResponse = VehicleResponse.builder()
+                    .licensePlate(vehicle.getLicensePlate())
+                    .ownerName(vehicle.getOwnerName())
+                    .vehicleType(vehicle.getVehicleType())
+                    .build();
+
+            vehicleResponseList.add(vehicleResponse);
+        }
+
+        return ResponseUtil.success(vehicleResponseList, GET_VEHICLES_IN_PARKING_SUCCESS, SUCCESS_CODE);
     }
 
 

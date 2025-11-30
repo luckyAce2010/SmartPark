@@ -6,9 +6,12 @@ import com.example.SmartPark.dto.request.CheckParkingLotRequest;
 import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
 import com.example.SmartPark.dto.response.ParkingLotAvailabilityResponse;
 import com.example.SmartPark.dto.response.Response;
+import com.example.SmartPark.dto.response.VehicleResponse;
 import com.example.SmartPark.service.interfaces.ParkingLotService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("parking-lots")
@@ -39,10 +42,14 @@ public class ParkingLotController {
     }
 
     //Get availability and occupancy
-    @GetMapping("availability")
+    @GetMapping("/availability")
     public Response<ParkingLotAvailabilityResponse> getAvailability(@RequestBody @Valid CheckParkingLotRequest checkParkingLotRequest) {
         return parkingLotService.checkParkingLotAvailability(checkParkingLotRequest.getLotId());
     }
 
-
+    //List all vehicles in a parking lot
+    @GetMapping("/vehicles")
+    public Response<List<VehicleResponse>> getVehicles(@RequestBody @Valid CheckParkingLotRequest checkParkingLotRequest) {
+        return parkingLotService.getVehicles(checkParkingLotRequest.getLotId());
+    }
 }
