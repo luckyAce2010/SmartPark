@@ -59,11 +59,11 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         //Validate Vehicle ID if exists
         //Check if Vehicle already checked in
         Vehicle vehicle = vehicleData.getVehicle(licensePlate);
-        if(vehicle == null){
-            return ResponseUtil.error(VEHICLE_LICENSE_PLATE_NOT_EXISTS(licensePlate), BAD_REQUEST_CODE);
-        }
-        if(vehicle.getCheckedIn()){
-            return ResponseUtil.error(VEHICLE_ALREADY_CHECKED_IN, BAD_REQUEST_CODE);
+        int value = vehicleAlreadyCheckIn(vehicle);
+        if(value != 3){
+            return value == 1 ?
+                    ResponseUtil.error(VEHICLE_LICENSE_PLATE_NOT_EXISTS(licensePlate), BAD_REQUEST_CODE) :
+                    ResponseUtil.error(VEHICLE_ALREADY_CHECKED_IN, BAD_REQUEST_CODE);
         }
 
         //Check if Parking lot is full
@@ -78,10 +78,52 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
         //Check in vehicle if all conditions are met
         vehicle.setCheckedIn(true);
+        vehicle.setCurrentParkingLot(lotId);
         parkingLot.getVehicles().add(vehicle);
         parkingLot.setOccupiedSpaces(parkingLot.getOccupiedSpaces() + 1);
 
         return ResponseUtil.success(VEHICLE_PARKED_SUCCESS, SUCCESS_CODE);
+    }
+
+    @Override
+    public Response<Void> checkOut(String licensePlate) {
+
+        //Trim whitespaces and unnecessary whitespaces
+        licensePlate = StringUtils.removeUnnecessaryWhiteSpaces(licensePlate);
+
+        //Validate Vehicle ID if exists
+        //Check if Vehicle already checked in
+        Vehicle vehicle = vehicleData.getVehicle(licensePlate);
+        int value = vehicleAlreadyCheckIn(vehicle);
+        if(value != 2){
+            return value == 1 ?
+                    ResponseUtil.error(VEHICLE_LICENSE_PLATE_NOT_EXISTS(licensePlate), BAD_REQUEST_CODE) :
+                    ResponseUtil.error(VEHICLE_NOT_CHECKED_IN, BAD_REQUEST_CODE);
+        }
+
+        //Get Parking Lot of Vehicle
+        ParkingLot parkingLot = parkingLotData.getParkingLot(vehicle.getCurrentParkingLot());
+
+        //Check out vehicle
+        vehicle.setCurrentParkingLot(null);
+        vehicle.setCheckedIn(false);
+        parkingLot.setOccupiedSpaces(parkingLot.getOccupiedSpaces() - 1);
+        parkingLot.getVehicles().remove(vehicle);
+
+        return ResponseUtil.success(VEHICLE_CHECK_OUT_SUCCESS, SUCCESS_CODE);
+    }
+
+
+    //Helper Methods
+    private int vehicleAlreadyCheckIn(Vehicle vehicle){
+        if(vehicle == null){
+            return 1;
+        }
+        if(vehicle.getCheckedIn()){
+            return 2;
+        }
+
+        return 3;
     }
 
 

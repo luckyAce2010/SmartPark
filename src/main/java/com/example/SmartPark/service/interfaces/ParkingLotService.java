@@ -8,4 +8,6 @@ public interface ParkingLotService {
     Response<Void> registerParkingLot(RegisterParkingLotRequest createParkingLotReq);
 
     Response<Void> checkIn(String lotId, String licensePlate);
+
+    Response<Void> checkOut(String licensePlate);
 }

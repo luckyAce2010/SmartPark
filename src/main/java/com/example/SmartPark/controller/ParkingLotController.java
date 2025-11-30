@@ -1,6 +1,7 @@
 package com.example.SmartPark.controller;
 
 import com.example.SmartPark.dto.request.CheckInRequest;
+import com.example.SmartPark.dto.request.CheckOutRequest;
 import com.example.SmartPark.dto.request.RegisterParkingLotRequest;
 import com.example.SmartPark.dto.response.Response;
 import com.example.SmartPark.service.interfaces.ParkingLotService;
@@ -29,6 +30,11 @@ public class ParkingLotController {
         return parkingLotService.checkIn(checkInRequest.getLotId(), checkInRequest.getLicensePlate());
     }
 
+    //Check out of parking lot
+    @PostMapping("/check-out")
+    public Response<Void> checkOutVehicle(@RequestBody @Valid CheckOutRequest checkOutRequest) {
+        return parkingLotService.checkOut(checkOutRequest.getLicensePlate());
+    }
 
 
 }
