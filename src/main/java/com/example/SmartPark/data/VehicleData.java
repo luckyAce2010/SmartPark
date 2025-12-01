@@ -1,11 +1,13 @@
 package com.example.SmartPark.data;
 
 import com.example.SmartPark.pojo.Vehicle;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //This will act as database for Vehicle
+@Component
 public class VehicleData {
     private static final List<Vehicle> vehicleList = new ArrayList<>();
 
