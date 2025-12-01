@@ -1,0 +1,60 @@
+------ Curl Bashes ------
+
+
+1.Register Vehicle
+
+curl --location 'localhost:8080/smart-park/vehicles' \
+--header 'Content-Type: application/json' \
+--data '{
+    "licensePlate" : "ace-1247",
+    "ownerName" : "Acecis Isidro",
+    "vehicleType" : "MOTORCYCLE"
+}'
+
+
+2. Register Parking Lot
+
+curl --location 'localhost:8080/smart-park/parking-lots' \
+--header 'Content-Type: application/json' \
+--data '{
+    "lotId" : "ParkingLot1",
+    "capacity" : 5,
+    "location" : "Pasig"
+}'
+
+
+3. Check in
+
+curl --location 'localhost:8080/smart-park/parking-lots/check-in' \
+--header 'Content-Type: application/json' \
+--data '{
+    "lotId" : "ParkingLot1",
+    "licensePlate" : "ace-1247"
+}'
+
+
+4. Check out
+
+curl --location 'localhost:8080/smart-park/parking-lots/check-out' \
+--header 'Content-Type: application/json' \
+--data '{
+    "licensePlate" : "ace-1247"
+}'
+
+
+5. Get Availability of Parking Lot
+
+curl --location --request GET 'localhost:8080/smart-park/parking-lots/availability' \
+--header 'Content-Type: application/json' \
+--data '{
+    "lotId" : "ParkingLot1"
+}'
+
+
+6. Get Vehicle List in Parking Lot
+
+curl --location --request GET 'localhost:8080/smart-park/parking-lots/vehicles' \
+--header 'Content-Type: application/json' \
+--data '{
+    "lotId" : "ParkingLot1"
+}'
