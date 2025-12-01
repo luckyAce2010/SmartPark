@@ -24,8 +24,13 @@ import static com.example.SmartPark.constants.VehicleConstant.*;
 @Service
 public class ParkingLotServiceImpl implements ParkingLotService {
 
-    private final ParkingLotData parkingLotData = new ParkingLotData();
-    private final VehicleData vehicleData = new VehicleData();
+    private final ParkingLotData parkingLotData;
+    private final VehicleData vehicleData;
+
+    public ParkingLotServiceImpl(ParkingLotData parkingLotData, VehicleData vehicleData) {
+        this.parkingLotData = parkingLotData;
+        this.vehicleData = vehicleData;
+    }
 
     @Override
     public Response<Void> registerParkingLot(RegisterParkingLotRequest createParkingLotReq) {

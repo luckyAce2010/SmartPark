@@ -17,7 +17,11 @@ import static com.example.SmartPark.constants.VehicleConstant.VEHICLE_REGISTER_S
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
-    private final VehicleData vehicleData = new VehicleData();
+    private final VehicleData vehicleData;
+
+    public VehicleServiceImpl(VehicleData vehicleData) {
+        this.vehicleData = vehicleData;
+    }
 
     @Override
     public Response<Void> registerVehicle(RegisterVehicleRequest registerVehicleReq) {
